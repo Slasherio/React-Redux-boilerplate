@@ -1,6 +1,11 @@
 {
   "extends": ["tslint:recommended", "tslint-react"],
   "rules": {
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ],
     "arrow-parens": false,
     "arrow-return-shorthand": [false],
     "comment-format": [true, "check-space"],

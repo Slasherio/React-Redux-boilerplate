@@ -1,10 +1,9 @@
-/**
- * This is the entry file for the application
- */
+/*** This is the entry file for the application*/
 import '@babel/polyfill';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Store, AnyAction } from 'redux';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
@@ -20,7 +19,7 @@ import history from './utils/history';
 import configureStore from './config/configureStore';
 
 // Create redux store with history
-const store = configureStore({}, history);
+const store: Store<any, AnyAction> = configureStore({}, history);
 
 ReactDOM.render(
   <Provider store={store}>

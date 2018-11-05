@@ -2,7 +2,7 @@
  * Create the store
  */
 
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, Store, AnyAction } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import createReducer from '../redux/reducers';
@@ -10,7 +10,7 @@ import createReducer from '../redux/reducers';
 export default function configureStore(
   initialState: object = {},
   history: any,
-) {
+): Store<any, AnyAction> {
   // Create the store with two middlewares
   // 1. thunk-middleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
