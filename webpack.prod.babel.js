@@ -1,23 +1,23 @@
 // Important modules this config uses
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { HashedModuleIdsPlugin } = require("webpack");
-const TerserPlugin = require("terser-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { HashedModuleIdsPlugin } = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = require("./webpack.base.babel")({
-  mode: "production",
+module.exports = require('./webpack.base.babel')({
+  mode: 'production',
 
   // In production, we skip all hot-reloading stuff
   entry: [
-    require.resolve("react-app-polyfill/ie11"),
-    path.join(process.cwd(), "app/app.js"),
+    require.resolve('react-app-polyfill/ie11'),
+    path.join(process.cwd(), 'app/app.tsx'),
   ],
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
-    filename: "[name].[chunkhash].js",
-    chunkFilename: "[name].[chunkhash].chunk.js",
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].chunk.js',
   },
 
   optimization: {
@@ -41,11 +41,11 @@ module.exports = require("./webpack.base.babel")({
         sourceMap: true,
       }),
     ],
-    nodeEnv: "production",
+    nodeEnv: 'production',
     sideEffects: true,
     concatenateModules: true,
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
       minSize: 30000,
       minChunks: 1,
       maxAsyncRequests: 5,
@@ -54,11 +54,11 @@ module.exports = require("./webpack.base.babel")({
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: "vendor",
-          chunks: "all",
+          name: 'vendor',
+          chunks: 'all',
         },
         main: {
-          chunks: "all",
+          chunks: 'all',
           minChunks: 2,
           reuseExistingChunk: true,
           enforce: true,
@@ -71,7 +71,7 @@ module.exports = require("./webpack.base.babel")({
   plugins: [
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
-      template: "app/index.html",
+      template: 'app/index.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -88,21 +88,21 @@ module.exports = require("./webpack.base.babel")({
     }),
 
     new CompressionPlugin({
-      algorithm: "gzip",
+      algorithm: 'gzip',
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8,
     }),
 
     new HashedModuleIdsPlugin({
-      hashFunction: "sha256",
-      hashDigest: "hex",
+      hashFunction: 'sha256',
+      hashDigest: 'hex',
       hashDigestLength: 20,
     }),
   ],
 
   performance: {
-    assetFilter: (assetFilename) =>
+    assetFilter: assetFilename =>
       !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
 });

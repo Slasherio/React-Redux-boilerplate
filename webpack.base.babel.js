@@ -2,17 +2,17 @@
  * COMMON WEBPACK CONFIGURATION
  */
 
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
 
-module.exports = (options) => ({
+module.exports = options => ({
   mode: options.mode,
   entry: options.entry,
   output: Object.assign(
     {
       // Compile into js/build.js
-      path: path.resolve(process.cwd(), "build"),
-      publicPath: "/",
+      path: path.resolve(process.cwd(), 'build'),
+      publicPath: '/',
     },
     options.output,
   ), // Merge with env dependent settings
@@ -23,13 +23,21 @@ module.exports = (options) => ({
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'awesome-typescript-loader',
+        },
+      },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+      {
         test: /\.(sass|scss)/,
-        include: path.join(__dirname, "app/scss"),
-        loader: "style-loader!css-loader!sass-loader",
+        include: path.join(__dirname, 'app/scss'),
+        loader: 'style-loader!css-loader!sass-loader',
       },
       {
         // Preprocess our own .css files
@@ -37,17 +45,17 @@ module.exports = (options) => ({
         // for a list of loaders, see https://webpack.js.org/loaders/#styling
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
-        use: "file-loader",
+        use: 'file-loader',
       },
       {
         test: /\.svg$/,
         use: [
           {
-            loader: "svg-url-loader",
+            loader: 'svg-url-loader',
             options: {
               // Inline files smaller than 10 kB
               limit: 10 * 1024,
@@ -60,14 +68,14 @@ module.exports = (options) => ({
         test: /\.(jpg|png|gif)$/,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
             options: {
               // Inline files smaller than 10 kB
               limit: 10 * 1024,
             },
           },
           {
-            loader: "image-webpack-loader",
+            loader: 'image-webpack-loader',
             options: {
               mozjpeg: {
                 enabled: false,
@@ -83,7 +91,7 @@ module.exports = (options) => ({
                 optimizationLevel: 7,
               },
               pngquant: {
-                quality: "65-90",
+                quality: '65-90',
                 speed: 4,
               },
             },
@@ -92,7 +100,7 @@ module.exports = (options) => ({
       },
       {
         test: /\.html$/,
-        use: "html-loader",
+        use: 'html-loader',
       },
     ],
   },
@@ -101,17 +109,17 @@ module.exports = (options) => ({
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
     new webpack.DefinePlugin({
-      "process.env": {
+      'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
   ]),
   resolve: {
-    modules: ["node_modules", "app"],
-    extensions: [".js", ".jsx", ".react.js"],
-    mainFields: ["browser", "jsnext:main", "main"],
+    modules: ['node_modules', 'app'],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.jsx'],
+    mainFields: ['browser', 'jsnext:main', 'main'],
   },
   devtool: options.devtool,
-  target: "web", // Make web variables accessible to webpack, e.g. window
+  target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
 });
