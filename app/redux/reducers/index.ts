@@ -4,7 +4,7 @@
 
 import { combineReducers, Reducer, Action } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import history from '../../utils/history';
+import {history} from '../../app';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers

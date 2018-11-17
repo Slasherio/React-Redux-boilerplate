@@ -1,3 +1,5 @@
+/**Main Component which include all application routes */
+
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -16,4 +18,5 @@ const App = (props: AppProps) => {
     </div>
   );
 };
+
 export default App;
